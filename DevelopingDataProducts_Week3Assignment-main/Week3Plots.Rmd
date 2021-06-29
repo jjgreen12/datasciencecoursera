@@ -1,0 +1,41 @@
+---
+title: "Week 3 Plotly Assignment"
+author: "Josiah Green"
+date: "Dec. 7th 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Car Data
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+fig <- plot_ly(mtcars, x = ~hp, y = ~qsec, type= "scatter", color = ~factor(cyl), size = ~wt)
+
+fig <- fig %>%
+  layout(title= "Comparison of the horsepower of the car to the quarter mile time by cylinders", 
+         legend.title = "Number of Cylinders",
+         xlab = "Horsepower",
+         ylab = "1/4 Mile Time (Sec)")
+fig
+```
+
+## Stock Market Data
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyr)
+library(dplyr)
+data("EuStockMarkets")
+
+stocks <- as.data.frame(EuStockMarkets) %>%
+  gather(index, price) %>%
+  mutate(time = rep(time(EuStockMarkets),4))
+
+fig <- plot_ly(stocks, x=~time, y=~price, color = ~index,type="scatter", mode="lines")
+fig <- fig %>%
+  layout(title = "View of Index Returns through Time")
+fig
+```

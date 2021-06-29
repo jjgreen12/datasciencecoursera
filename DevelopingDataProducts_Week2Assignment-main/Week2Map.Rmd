@@ -1,0 +1,29 @@
+---
+title: "Week 2 Map"
+author: "Josiah Green"
+date: "11/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## November 30th 2020
+Top 10 Iowa Cities by Population
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+library(leaflet)
+ia_cities <- data.frame(name = c("#1 Des Moines", "#2 Cedar Rapids", "#3 Davenport", "#4 Sioux City", "#5 Iowa City", "#6 West Des Moines", "#7 Ankeny", "#8 Waterloo", "#9 Ames", "#10 Council Bluffs"),
+                        pop = c(214237, 133562, 101590, 82651, 75130, 67899, 67355, 67328, 66258, 62166),
+                        latitude = c(41.619549, 41.977879, 41.543056, 42.4963, 41.6611, 41.5639, 41.7318, 42.4928, 42.034534, 41.2619),
+                        longitude = c(-93.598022, -91.665627, -90.590836, -96.4049, -91.5302, -93.7594, -93.6001, -92.3426, -93.620369, -95.8608))
+ia_cities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 1, radius = sqrt(ia_cities$pop) * 30) %>%
+  addMarkers(label = ia_cities$name)
+
+
+```
